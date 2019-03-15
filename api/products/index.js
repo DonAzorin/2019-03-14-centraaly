@@ -1,8 +1,13 @@
 const express = require('express');
 const productsRouter = express.Router();
 
-productsRouter.get('/', (req,res) => {
-  res.send('Estas haciendo una petición a products');
-})
+//Middlewares
+const getProducts = require('./getProducts');
+
+//Métodos
+productsRouter.get('/', getProducts);
+// productsRouter.post('/', postProducts);
+// productsRouter.put('/', putProducts);
+// productsRouter.delete('/', deleteProducts);
 
 module.exports = productsRouter;
