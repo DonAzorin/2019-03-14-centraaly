@@ -3,11 +3,14 @@ const productsRouter = express.Router();
 
 //Middlewares
 const getProducts = require('./getProducts');
+const createProduct = require('./createProduct');
+const putProducts = require('./putProducts');
+const deleteProducts = require('./deleteProduct');
 
 //Métodos
 productsRouter.get('/', getProducts);
-// productsRouter.post('/', postProducts);
-// productsRouter.put('/', putProducts);
-// productsRouter.delete('/', deleteProducts);
+productsRouter.post('/', createProduct);
+productsRouter.put('/', putProducts);
+productsRouter.delete('/', deleteProducts);
 
 module.exports = productsRouter;
