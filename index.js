@@ -4,14 +4,21 @@ const port = 8080;
 const chalk = require('chalk'); //Permite colorear los mensajes de la consola
 const mongoose  = require('mongoose');
 
-mongoose.connect(process.env.ATLAS_URL);
+mongoose.connect(process.env.ATLAS_URL)
+  .then(result => {
+    console.log('connected');
+  })
+  .catch(err => {
+    console.log(err)
+  });
 
-var db =mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function() {
-  //ve're connected!
-  console.log('connected')
-});
+//Otra manera de conectarse a la base de datos
+// var db =mongoose.connection;
+// db.on('error', console.error.bind(console, 'connection error:'));
+// db.once('open', function() {
+//   //ve're connected!
+//   console.log('connected')
+// });
 
 //Escuchar peticiones en un puerto
 app.listen(port /*8080*/, () => {
