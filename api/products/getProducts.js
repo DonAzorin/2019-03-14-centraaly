@@ -1,15 +1,15 @@
-const mongoose = require('mongoose');
-const productSchema = require('./model');
-//const products = require('../../db');
-
-//var Product = mongoose.model('Product', productSchema);
+const Product = require('../models/product');
 
 function getProducts(req,res) {
-
-  
-  //SOLO SE DEBE MANDAR UNA RESPUESTA
-  //res.send('Estas haciendo una petición a products');
-  res.json(products);
-}
+  Product.find()
+    .then(docs => {
+      res.status(200).json(docs);
+    })
+    .catch(err => {
+      res.status(500).json({
+        error: err
+      })
+    })
+};
 
 module.exports = getProducts;

@@ -1,30 +1,22 @@
-const products = require('../../db')
+const Product = require('../models/product');
 
-function getSingleProduct(req,res) {
-  const productId = req.params.id
-  //OPCION 1:
-  // for(let item of products.items) {
-  //   if (item.id == productId) {
-  //     res.json(item).status(200);
-  //   }
-  // }
-  //res.send('No se encontró ese producto').status(404);
-
-  //OPCION 2 con filter:
-  //const requestedProduct = products.items.filter(function(item) {
-  //  return item.id == productId;
-  //})
-
-  //OPCIÓN 2.1:
-  const requestedProduct = products.items.filter(item => item.id == productId)
-
-  if(requestedProduct.length !=0) {
-    res.json(requestedProduct[0]).status(200);
-  } else {
-    res.send('No se encontró ese producto').status(404);
-  }
+function getSingleProduct(req, res) {
+  Product.findById(req.params.id)
+    .then(doc => {
+      if(doc){
+        res.status(200).json(doc);
+      } else {
+        res.status(404).json({
+          message: "El id que buscas no existe :'c"
+        })
+      }
+    })
+    .catch(err => {
+      res.status(500).json({
+        error: err
+      })
+    })
 }
 
-//Filter nos regresa eun array y no el producto solamente
 
 module.exports = getSingleProduct;
