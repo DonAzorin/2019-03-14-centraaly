@@ -1,14 +1,23 @@
-const products = require('../../db');
+const Product = require('../models/product');
 
 function deleteProducts(req,res) {
-  deleteId = req.params.id;
-  //Esta es una solución rápida para eliminar un producto:
-  //products.items.slice(deleteId, deleteId)
-
-  //Propuesta de Tony
-  products.items = products.items.filter(item => {item.id != deleteId})
-
-  res.send(products.items).status(202);
+  Product.remove({_id: req.params.id})
+    .then(result => {
+      if(result.n > 0){
+        res.status(200).json({
+          message: "Se eliminó el elemento"
+        })
+      } else {
+        res.status(404).json({
+          message: "No existen elementos para eliminar"
+        })
+      }
+    })
+    .catch(err => {
+      res.status(500).json({
+        error: err
+      })
+    })
 }
 
 module.exports = deleteProducts;
